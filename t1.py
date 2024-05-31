@@ -1,19 +1,33 @@
 from rational import Rational
-from rational_list import RationalList
 
 
-res = open('result5_3_2.txt', 'w')
-files = ['input01.txt', 'input02.txt', 'input03.txt']
-for file in files:
-    with open(file) as f:
-        array = RationalList([])
-        new = []
-        for line in f:
-            if line.split() != []:
-                data = [el for el in line.split()]
-                for num in data:
-                    if '/' in num:
-                        new = array + Rational(num)
-                    else:
-                        new = array + Rational(int(num))
-        res.write(f'{sum(new)} \n')
+def string(s):
+    new = s.split('/')
+    obj = Rational(int(new[0]), int(new[1]))
+    return obj
+
+
+result = open('result.txt', 'w')
+with open('input01.txt') as f:
+    for line in f:
+        if line.split() != []:
+            data = [el for el in line.split()]
+            try:
+                res = Rational(int(data[0]))
+            except ValueError:
+                res = string(data[0])
+
+            for num in range(len(data) - 1):
+                if data[num] in '+-*':
+                    try:
+                        obj = Rational(int(data[num + 1]))
+                    except ValueError:
+                        obj = string(data[num + 1])
+
+                    if data[num] == '+':
+                        res += obj
+                    elif data[num] == '-':
+                        res -= obj
+                    elif data[num] == '*':
+                        res *= obj
+            result.write(f'{res}, \n')

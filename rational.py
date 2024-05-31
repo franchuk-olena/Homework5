@@ -8,7 +8,7 @@ class Rational:
             self.numer = numer
             self.den = den
 
-        assert self.den != 0, "Знаменник не може бути нуль"
+        assert self.den != 0
 
         if self._gcd(self.numer, self.den) != 1:
             a = self._gcd(self.numer, self.den)
